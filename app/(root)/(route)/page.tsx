@@ -18,10 +18,6 @@ const RootPage = () => {
     
     // I only want this root page to trigger the model
     return null;
-    //(
-    //     <div className='p-4'>
-    //         Root Page
-    //     </div>
-    // )
+    // Root Page
 }
 export default RootPage; 

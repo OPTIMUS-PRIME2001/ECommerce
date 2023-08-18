@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 
 //Local imports
 import { StoreModal } from '@/components/modals/storeModal';
+import { AlertModal } from '@/components/modals/alert-modal';
 
 export const ModalProvider = () => {
     // To ensure there will not be any Hydration errors with client components like Modals
@@ -24,6 +25,7 @@ export const ModalProvider = () => {
     return (
         <>
             <StoreModal />
+            <AlertModal />
         </>
     );
 }
