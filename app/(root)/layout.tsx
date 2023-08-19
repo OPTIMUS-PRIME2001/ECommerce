@@ -2,7 +2,7 @@
 import { redirect } from 'next/navigation';
 
 //Local imports
-import prisma from '@/lib/prismadb';
+import prismadb from '@/lib/prismadb';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 
 export default async function SetupLayout({
@@ -10,6 +10,8 @@ export default async function SetupLayout({
 }:{
     children: React.ReactNode;
 }){
+
+    const billboard = await prismadb.billboard
     //get current User details
     const currentUser = await getCurrentUser();
 
@@ -19,7 +21,7 @@ export default async function SetupLayout({
     };
 
     // we are loading the first store available with currently logged in user
-    const store = await prisma.store.findFirst({
+    const store = await prismadb.store.findFirst({
         where: {
             userId: currentUser.id,
         }

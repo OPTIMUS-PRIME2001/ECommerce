@@ -28,7 +28,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { AlertModal } from "@/components/modals/alert-modal";
+import { AlertModal } from "@/components/modals/alertModal";
 import { ApiAlert } from "@/components/customUi/apiAlert";
 import { useOrigin } from "@/hooks/use-origin";
 

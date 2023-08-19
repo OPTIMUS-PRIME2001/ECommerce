@@ -32,13 +32,13 @@ export function MainNav({
             active: pathname === `/${params.storeId}`
         },
         {
-            href: `/${params.storeId}/settings`,
-            label: 'Settings',
-            active: pathname === `/${params.storeId}/settings`
+            href: `/${params.storeId}/billboards`,
+            label: 'Billboards',
+            active: pathname === `/${params.storeId}/billboard`
         },
         {
             href: `/${params.storeId}/settings`,
-            label: 'New Nav',
+            label: 'Settings',
             active: pathname === `/${params.storeId}/settings`
         }
     ];
@@ -48,8 +48,9 @@ export function MainNav({
         <NavigationMenu>
             <NavigationMenuList>
                 <nav className={cn("flex items-center space-x-4 lg:space-x-6", className)}>
-                    {routes.map((route) => (
-                        <NavigationMenuItem>
+                    {routes.map((route) => ( 
+                        //added key to NavigationMenuItem
+                        <NavigationMenuItem key={route.href}>
                         <Link
                             key={route.href}
                             href={route.href}
