@@ -6,26 +6,31 @@ import prisma from "@/lib/prismadb";
 // we no longer have to use request methods in a switch method 
 // we can create out custom POST request method
 export async function POST(
-    request: Request, 
-  ) {
-    // from the body , we retrieve the provided name, email and hashedpassword
+  request: Request,
+) {
+  // from the body , we retrieve the provided name, email and hashedpassword
+  try {
     const body = await request.json();
-    const { 
+    const {
       email,
       name,
       password,
-     } = body;
-  
-     const hashedPassword = await bcrypt.hash(password, 12);
-    
-     // Now insert into database table user as a new user and pass the retrieved crendentials
-     const user = await prisma.user.create({
+    } = body;
+
+    const hashedPassword = await bcrypt.hash(password, 12);
+
+    // Now insert into database table user as a new user and pass the retrieved crendentials
+    const user = await prisma.user.create({
       data: {
         email,
         name,
         hashedPassword,
       }
     });
-  
+
     return NextResponse.json(user);
+  } catch (error) {
+      console.log('[REGISTER_POST]', error);
+      return new NextResponse("Internal error", { status: 500 });
+  }  
 } 

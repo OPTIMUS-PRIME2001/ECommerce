@@ -83,7 +83,6 @@ const SignInPage = () => {
 
         if (variant === 'LOGIN') {
             //NextAuth SignIN
-            console.log('Inside Login')
             signIn('credentials', {
                 ...data,
                 redirect: false,
@@ -104,7 +103,7 @@ const SignInPage = () => {
         }
 
         if (variant === 'REGISTER') {
-            await axios.post('/api/register', data)
+            await axios.post('/api/register', data);
             signIn('credentials', {
                 ...data,
                 redirect: false,
