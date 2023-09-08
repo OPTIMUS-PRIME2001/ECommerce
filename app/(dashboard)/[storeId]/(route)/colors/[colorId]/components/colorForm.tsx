@@ -10,7 +10,7 @@ import { useState } from "react"
 import { useParams, useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toast } from "react-hot-toast"
-import { Billboard, Category } from "@prisma/client"
+import { Color } from "@prisma/client"
 
 // Local imports
 //components
@@ -27,26 +27,26 @@ import {
 import { Separator } from "@/components/ui/separator"
 import Heading from "@/components/ui/Heading"
 import { AlertModal } from "@/components/modals/alertModal"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import ImageUpload from "@/components/customUi/imageUpload"
 
 
 // Formschema with zord validation
 const formSchema = z.object({
-    name: z.string().min(2),
-    billboardId: z.string().min(1),
+    name: z.string().min(1),
+    value: z.string().min(4).regex(/^#/,{
+        message: 'String must be a valid hex code',
+    }),
 });
 
 // Type Specification
-type CategoryFormValues = z.infer<typeof formSchema>
+type ColorFormValues = z.infer<typeof formSchema>
 
-interface CategoryFormProps {
-    initialData: Category | null;
-    billboards: Billboard[];
+interface ColorFormProps {
+    initialData: Color | null;
 };
 
-export const CategoryForm: React.FC<CategoryFormProps> = ({
-    initialData,
-    billboards,
+export const ColorForm: React.FC<ColorFormProps> = ({
+    initialData
 }) => {
     const params = useParams();
     const router = useRouter();
@@ -55,31 +55,31 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    // Some toggler variales between new category creation or existing category updation mode
-    const title = initialData ? 'Edit category' : 'Create category';
-    const description = initialData ? 'Edit a category.' : 'Add a new category';
-    const toastMessage = initialData ? 'Category updated.' : 'Category created.';
+    // Some toggler variales between new color creation or existing color updation mode
+    const title = initialData ? 'Edit color' : 'Create color';
+    const description = initialData ? 'Edit a color.' : 'Add a new color';
+    const toastMessage = initialData ? 'Color updated.' : 'Color created.';
     const action = initialData ? 'Save changes' : 'Create';
 
-    const form = useForm<CategoryFormValues>({
+    const form = useForm<ColorFormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: initialData || {
             name: '',
-            billboardId: '',
+            value: ''
         }
     });
 
-    // Upload new Category details 
-    const onSubmit = async (data: CategoryFormValues) => {
+    // Upload new Color details 
+    const onSubmit = async (data: ColorFormValues) => {
         try {
             setLoading(true);
             if (initialData) {
-                await axios.patch(`/api/${params.storeId}/categories/${params.categoryId}`, data);
+                await axios.patch(`/api/${params.storeId}/colors/${params.colorId}`, data);
             } else {
-                await axios.post(`/api/${params.storeId}/categories`, data);
+                await axios.post(`/api/${params.storeId}/colors`, data);
             }
             router.refresh();
-            router.push(`/${params.storeId}/categories`);
+            router.push(`/${params.storeId}/colors`);
             toast.success(toastMessage);
         } catch (error: any) {
             toast.error('Something went wrong.');
@@ -89,16 +89,16 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
     };
 
 
-    // Deletion of existing Category
+    // Deletion of existing size
     const onDelete = async () => {
         try {
             setLoading(true);
-            await axios.delete(`/api/${params.storeId}/categories/${params.categoryId}`);
+            await axios.delete(`/api/${params.storeId}/colors/${params.sizeId}`);
             router.refresh();
-            router.push(`/${params.storeId}/categories`);
-            toast.success('Category deleted.');
+            router.push(`/${params.storeId}/colors`);
+            toast.success('Color deleted.');
         } catch (error: any) {
-            toast.error('Make sure you removed all products using this category first.');
+            toast.error('Make sure you removed all products using this color first.');
         } finally {
             setLoading(false);
             setOpen(false);
@@ -128,7 +128,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
             </div>
             <Separator />
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">                    
                     <div className="md:grid md:grid-cols-3 gap-8">
                         <FormField
                             control={form.control}
@@ -137,7 +137,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
                                 <FormItem>
                                     <FormLabel>Name</FormLabel>
                                     <FormControl>
-                                        <Input disabled={loading} placeholder="Category name" {...field} />
+                                        <Input disabled={loading} placeholder="Size label" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -145,22 +145,19 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
                         />
                         <FormField
                             control={form.control}
-                            name="billboardId"
+                            name="value"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Billboard</FormLabel>
-                                    <Select disabled={loading} onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
-                                        <FormControl>
-                                            <SelectTrigger>
-                                                <SelectValue defaultValue={field.value} placeholder="Select a billboard" />
-                                            </SelectTrigger>
-                                        </FormControl>
-                                        <SelectContent>
-                                            {billboards.map((billboard) => (
-                                                <SelectItem key={billboard.id} value={billboard.id}>{billboard.label}</SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
+                                    <FormLabel>Value</FormLabel>
+                                    <FormControl>
+                                        <div className="flex items-center gap-x-4">
+                                            <Input disabled={loading} placeholder="Size Value" {...field} />
+                                            <div
+                                                className="border p-4 rounded-full"
+                                                style={{ backgroundColor: field.value }}
+                                            />
+                                        </div>
+                                    </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}

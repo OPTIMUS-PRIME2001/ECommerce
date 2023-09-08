@@ -27,7 +27,6 @@ import {
 import { Separator } from "@/components/ui/separator"
 import Heading from "@/components/ui/Heading"
 import { AlertModal } from "@/components/modals/alertModal"
-import ImageUpload from "@/components/customUi/imageUpload"
 
 
 // Formschema with zord validation
@@ -72,7 +71,7 @@ export const SizeForm: React.FC<SizeFormProps> = ({
         try {
             setLoading(true);
             if (initialData) {
-                await axios.patch(`/api/${params.storeId}/sizes/${params.aizeId}`, data);
+                await axios.patch(`/api/${params.storeId}/sizes/${params.sizeId}`, data);
             } else {
                 await axios.post(`/api/${params.storeId}/sizes`, data);
             }
