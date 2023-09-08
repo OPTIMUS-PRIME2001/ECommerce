@@ -7,25 +7,25 @@ import getCurrentUser from "@/app/actions/getCurrentUser";
 // HTTPS GET REQUEST
 export async function GET(
   req: Request,
-  { params }: { params: { categoryId: string } }
+  { params }: { params: { sizeId: string } }
 ) {
   try {
-    // if categoryId not exists inside params
-    if (!params.categoryId) {
-      return new NextResponse("Category id is required", { status: 400 });
+    // if sizeId not exists inside params
+    if (!params.sizeId) {
+      return new NextResponse("Size id is required", { status: 400 });
     }
 
-    // with category id , find the particular category details
-    const category = await prismadb.category.findUnique({
+    // with size id , find the particular size details
+    const size = await prismadb.size.findUnique({
       where: {
-        id: params.categoryId
+        id: params.sizeId
       }
     });
   
-    // return with the details of category
-    return NextResponse.json(category);
+    // return with the details of size
+    return NextResponse.json(size);
   } catch (error) {
-    console.log('[CATEGORY_GET]', error);
+    console.log('[SIZE_GET]', error);
     return new NextResponse("Internal error", { status: 500 });
   }
 };
@@ -33,7 +33,7 @@ export async function GET(
 // HTTPS DELETE REQUEST
 export async function DELETE(
   req: Request,
-  { params }: { params: { categoryId: string, storeId: string } }
+  { params }: { params: { sizeId: string, storeId: string } }
 ) {
   try {
 
@@ -45,9 +45,9 @@ export async function DELETE(
       return new NextResponse("Unauthenticated", { status: 403 });
     }
 
-    // from params get categoryId and if does not exist then throw error
-    if (!params.categoryId) {
-      return new NextResponse("Category id is required", { status: 400 });
+    // from params get sizeId and if does not exist then throw error
+    if (!params.sizeId) {
+      return new NextResponse("Size id is required", { status: 400 });
     }
 
     // with store id querry to database for store details belongs to current user
@@ -63,17 +63,17 @@ export async function DELETE(
       return new NextResponse("Unauthorized", { status: 405 });
     }
 
-    // if found , then delete the existing category for the store
-    const category = await prismadb.category.deleteMany({
+    // if found , then delete the existing size for the store
+    const size = await prismadb.size.deleteMany({
       where: {
-        id: params.categoryId,
+        id: params.sizeId,
       }
     });
   
     // return with deleted confirmation
-    return NextResponse.json(category);
+    return NextResponse.json(size);
   } catch (error) {
-    console.log('[CATEGORY_DELETE]', error);
+    console.log('[SIZE_DELETE]', error);
     return new NextResponse("Internal error", { status: 500 });
   }
 };
@@ -81,7 +81,7 @@ export async function DELETE(
 // HTTPS PATCH REQUEST
 export async function PATCH(
   req: Request,
-  { params }: { params: { categoryId: string, storeId: string } }
+  { params }: { params: { sizeId: string, storeId: string } }
 ) {
   try {   
     // get the currentUser currently in the session
@@ -91,7 +91,7 @@ export async function PATCH(
     const body = await req.json();
     
     // spread the body and store in variables
-    const {name, billboardId } = body;
+    const {name, value } = body;
     
     // if current user does not exist throw error with status code 403
     if (!currentUser) {
@@ -103,14 +103,14 @@ export async function PATCH(
       return new NextResponse("Name is required", { status: 400 });
     }
 
-    // if billboardId does not exist throw error with status code 400
-    if (!billboardId) {
-      return new NextResponse("Billboard id is required", { status: 400 });
+    // if value does not exist throw error with status code 400
+    if (!value) {
+      return new NextResponse("value is required", { status: 400 });
     }
 
-    // from params get categoryId and if does not exist then throw error
-    if (!params.categoryId) {
-      return new NextResponse("Category id is required", { status: 400 });
+    // from params get sizeId and if does not exist then throw error
+    if (!params.sizeId) {
+      return new NextResponse("Size id is required", { status: 400 });
     }
 
      // with store id querry to database for store details belongs to current user
@@ -126,21 +126,21 @@ export async function PATCH(
       return new NextResponse("Unauthorized", { status: 405 });
     }
 
-    // if found , then update the existing category for the store with relevant details as requested
-    const category = await prismadb.category.update({
+    // if found , then update the existing size for the store with relevant details as requested
+    const size = await prismadb.size.update({
       where: {
-        id: params.categoryId,
+        id: params.sizeId,
       },
       data: {
         name,
-        billboardId
+        value
       }
     });
   
     // return with updatation confirmation
-    return NextResponse.json(category);
+    return NextResponse.json(size);
   } catch (error) {
-    console.log('[CATEGORY_PATCH]', error);
+    console.log('[SIZE_PATCH]', error);
     return new NextResponse("Internal error", { status: 500 });
   }
 };
