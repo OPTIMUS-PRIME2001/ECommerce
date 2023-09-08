@@ -13,14 +13,14 @@ import Heading from "@/components/ui/Heading";
 import { Separator } from "@/components/ui/separator";
 import { ApiList } from "@/components/customUi/apiList";
 
-import { columns, CategoryColumn } from "./columns";
+import { columns, SizeColumn } from "./columns";
 
 
-interface CategoryClientProps {
-    data: CategoryColumn[];
+interface SizesClientProps {
+    data: SizeColumn[];
 }
 
-export const CategoryClient: React.FC<CategoryClientProps> = ({
+export const SizesClient: React.FC<SizesClientProps> = ({
     data
 }) => {
     const params = useParams();
@@ -30,9 +30,9 @@ export const CategoryClient: React.FC<CategoryClientProps> = ({
         <>
             <div className="flex items-center justify-between">
                 <Heading
-                    title={`Categories (${data.length})`}
-                    subtitle="Manage categories for your store" />
-                <Button onClick={() => router.push(`/${params.storeId}/categories/new`)}>
+                    title={`Sizes (${data.length})`}
+                    subtitle="Manage sizes for your store" />
+                <Button onClick={() => router.push(`/${params.storeId}/sizes/new`)}>
                     <Plus className="mr-2 h-4 w-4" /> Add New
                 </Button>
             </div>
@@ -40,9 +40,9 @@ export const CategoryClient: React.FC<CategoryClientProps> = ({
             <DataTable searchKey="name" columns={columns} data={data} />
             <Heading
                 title="API"
-                subtitle="API Calls for categories" />
+                subtitle="API Calls for Sizes" />
             <Separator />
-            <ApiList entityName="categories" entityIdName="categoryId" />
+            <ApiList entityName="sizes" entityIdName="sizeId" />
         </>
     );
 };

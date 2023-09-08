@@ -50,6 +50,7 @@ const SignInPage = () => {
     useEffect(() => {
         if (session?.status === 'authenticated') {
             router.push('/');
+            toast.success('Logged in');
         }
     }, [session?.status, router]);
 
@@ -88,11 +89,9 @@ const SignInPage = () => {
                 redirect: false,
             })
                 .then((callback) => {
-                    if (callback?.ok) {
-                        toast.success('Logged in');
+                    if (callback?.ok) {                        
                         router.push('/')
                     }
-
                     if (callback?.error) {
                         toast.error(callback.error);
                     }
