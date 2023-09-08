@@ -8,7 +8,7 @@ const SizePage = async ({
   params: { sizeId: string }
 }) => {
 
-  // To find if sizes already exits or not , if not then we create new billboard
+  // To find if sizes already exits or not , if not then we create new size
   const size = await prismadb.size.findUnique({
     where: {
       id: params.sizeId
