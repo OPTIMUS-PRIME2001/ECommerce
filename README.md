@@ -3,38 +3,57 @@
 
 This is a repository for a Full Stack E-Commerce + Dashboard & CMS: Next.js 13 App Router, React, Tailwind, Prisma, Azure SQL with Sql Server
 
-[VIDEO TUTORIAL](https://youtu.be/5miHyP6lExg)
+[VIDEO LINK](https://drive.google.com/drive/folders/1bx-68Fzv9aq4WTmuRhgxezCUfFeeqwrh?usp=sharing)
 
 Key Features:
 
-- We will be using Shadcn UI for the Admin!
-- Our admin dashboard is going to serve as both CMS, Admin and API!
-- You will be able to control mulitple vendors / stores through this single CMS! (For example you can have a "Shoe store" and a "Laptop store" and a "Suit store", and our CMS will generate API routes for all of those individually!)
-- You will be able to create, update and delete categories!
-- You will be able to create, update and delete products!
-- You will be able to upload multiple images for products, and change them whenever you want!
-- You will be able to create, update and delete filters such as "Color" and "Size", and then match them in the "Product" creation form.
-- You will be able to create, update and delete "Billboards" which are these big texts on top of the page. You will be able to attach them to a single category, or use them standalone (Our Admin generates API for all of those cases!)
-- You will be able to Search through all categories, products, sizes, colors, billboards with included pagination!
-- You will be able to control which products are "featured" so they show on the homepage!
-- You will be able to see your orders, sales, etc.
-- You will be able to see graphs of your revenue etc.
-- You will learn NextAuth for authentication!
-- Order creation
-- Stripe checkout
-- Stripe webhooks
-- Azure SQL + Prisma + Azure SQL Database Servers
+-[x] We will be using Shadcn UI for the Admin!
+-[x] Our admin dashboard is going to serve as both CMS, Admin and API!
+-[x] You will be able to control mulitple vendors / stores through this single CMS! (For example you can have a "Shoe store" and a "Laptop store" and a "Suit store", and our CMS will generate API routes for all of those individually!)
+-[x] You will be able to create, update and delete categories!
+-[x] You will be able to create, update and delete products!
+-[x] You will be able to upload multiple images for products, and change them whenever you want!
+-[x] You will be able to create, update and delete filters such as "Color" and "Size", and then match them in the "Product" creation form.
+-[x] You will be able to create, update and delete "Billboards" which are these big texts on top of the page. You will be able to attach them to a single category, or use them standalone (Our Admin generates API for all of those cases!)
+-[x] You will be able to Search through all categories, products, sizes, colors, billboards with included pagination!
+-[x] You will be able to control which products are "featured" so they show on the homepage!
+-[x] You will be able to see your orders, sales, etc.
+-[ ] You will be able to see graphs of your revenue etc.
+-[x] You will learn NextAuth for authentication!
+-[ ] Order creation
+-[ ] Stripe checkout
+-[ ] Stripe webhooks
+-[x] Azure SQL + Prisma + Azure SQL Database Servers
 
-## Main Features of the Project
-- [x] A diverse collection of courses covering various subjects, skills, and levels of expertise.
-- [x] The ability for users to create personalized learning paths based on their interests, goals, and current proficiency level.
-- [x] Interactive Designs with a Subscription based model
 
 ## Using Azure SQL Database and Server Service 
-- Azure Database
-- Azure Azure
+- 1. Create an Azure SQL Database:
+  - Sign in to your Azure portal.
+  - Click on "Create a resource" or navigate to the "SQL databases" service.
+  - Follow the wizard to configure your database, including choosing the performance tier (DTUs or vCores), specifying a server, setting up security (firewalls, authentication), and defining database options.
+  
+- 2. Connect to Your Azure SQL Database:
+  - Once your database is created, you can connect to it using various tools and methods:
+  - Azure Portal: You can use the Azure portal's query editor for basic database interactions.
+  - SQL Server Management Studio (SSMS): Connect to your Azure SQL Database using SSMS.
+  - Azure Data Studio: A cross-platform tool that allows you to connect to and manage Azure SQL Databases.
+  - Connection Strings: You'll need connection strings (server name, database name, authentication details) to connect from applications.
 
-## Using Azue Web Apps Service
+- Azure SQL Database Schema
+  - Database Contains 11 Relational Tables 
+  - Tables are Users , Accounts , Store , Billboard , Category , Product , Size , Color , Order , OrderItem , Image
+  - User: Relational Model keeps records of all users Authorized to our website
+  - Accounts: Relational Model kepps records of Authentication of users through google provider
+  - Store: This Table keeps record of stores for a particular user
+  - Billboard: This Table keeps records of billboards under every stores for a particular user
+  - Category: This table keeps records of categories we have in a store
+  - Sizes: This table keeps records of all variety of sizes we want to store for a particular store which we use for products
+  - Colors:  This table keeps records of all variety of colors we want to store for a particular store which we use for products
+  - Products: This relation keeps records of all product under partivular category and store with certain colors and size which were already recorded
+  - Orders: All orders made by customers from customer panel
+  - Image: All the records for image links corresponds to products
+
+## Using Azue Static Web Apps Service
 Started fast and finish faster with source code integration from GitHub, live debugging, and one-click publish directly from Microsoft Visual Studio IDE. Easily connect to your database of choice, and tap into an ecosystem of OSS packages, APIs, connectors, and services through the Azure Marketplace, expediting development. Quickly add custom domains and SSL, single sign-on (SSO) integration with popular identity providers, and application health monitoring to your apps with the Azure portal.
 1. Create a Web App: Log in to the Azure portal (portal.azure.com) and click on "Create a resource." Search for "Web App" and click on "Create" to start the creation process.
 2. Configure Web App Settings: In the creation wizard, you'll need to provide details such as the subscription, resource group, and a unique name for your Web App. You'll also need to select the operating system (Windows or Linux) and the runtime stack (e.g., Node.js, .NET, Python, PHP, etc.) that your website requires.
@@ -57,7 +76,7 @@ Started fast and finish faster with source code integration from GitHub, live de
 ### Cloning the repository
 
 ```shell
-git clone https://github.com/AntonioErdeljac/next13-ecommerce-admin.git
+git clone https://github.com/OPTIMUS-PRIME2001/ECommerce.git
 ```
 
 ### Install packages
