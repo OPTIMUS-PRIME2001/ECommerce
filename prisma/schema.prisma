@@ -58,6 +58,7 @@ model Store {
   products        Product[]  @relation("StoreToProduct")
   sizes           Size[]     @relation("StoreToSize")
   colors          Color[]     @relation("StoreToColor")
+  orders          Order[]     @relation("StoreToOrder")
   createdAt       DateTime   @default(now())
   updatedAt       DateTime   @updatedAt
 }
@@ -105,7 +106,7 @@ model Product {
   colorId     String    // Foreign Key to Color
   color       Color     @relation(fields: [colorId], references: [id])
   images      Image[]   // Relation to Image model
-  // orderItems  OrderItem[]   // Relation to Order model
+  orderItems  OrderItem[]   // Relation to Order model
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
@@ -149,6 +150,33 @@ model Image {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
+  @@index([productId])
+}
+
+
+model Order {
+  id        String    @id @default(uuid())
+  storeId     String    // Foreign Key to Store
+  store       Store     @relation("StoreToOrder", fields: [storeId], references: [id])
+  orderItems OrderItem[] // Relation to OrderItem model
+  isPaid     Boolean   @default(false)
+  phone      String    @default("")
+  address    String    @default("")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([storeId])
+}
+
+// Intermediary for a many-to-many relationship
+model OrderItem {
+  id        String  @id @default(uuid())
+  orderId   String  // Foreign Key to Order
+  order     Order   @relation(fields: [orderId], references: [id])
+  productId String  // Foreign Key to Product
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@index([orderId])
   @@index([productId])
 }
 
